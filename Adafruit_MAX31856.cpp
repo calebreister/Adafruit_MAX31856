@@ -24,10 +24,9 @@ Adafruit_MAX31856::Adafruit_MAX31856(SPI_HandleTypeDef* spi_port,
 	spi = spi_port;
 	gpio_port = cs_port;
 	gpio_pin = cs_pin;
-	type = MAX31856_TCTYPE_K;
 }
 
-boolean Adafruit_MAX31856::begin(void) {
+bool Adafruit_MAX31856::begin(void) {
 	// assert on any fault
 	writeRegister8(MAX31856_MASK_REG, 0x0);
 	writeRegister8(MAX31856_CR0_REG, MAX31856_CR0_OCFAULT0);
@@ -157,7 +156,7 @@ HAL_StatusTypeDef Adafruit_MAX31856::readRegisterN(uint8_t addr, uint8_t buffer[
 	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_RESET);
 
 	// Send the register address
-	HAL_StatusTypeDef ok = HAL_SPI_Transmit(&spi, &addr, 1, 10);
+	HAL_StatusTypeDef ok = HAL_SPI_Transmit(spi, &addr, 1, 10);
 	if (ok != HAL_OK)
 		return ok;
 
@@ -176,16 +175,16 @@ HAL_StatusTypeDef Adafruit_MAX31856::writeRegister8(uint8_t addr, uint8_t data) 
 	addr |= 0x80; // make sure top bit is set
 
 	// CS pin low
-	HAL_GPIO_WritePin(&gpio_port, gpio_pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_RESET);
 
 	// Prepare transmit buffer
-	uint8_t tx = {addr, data};
+	uint8_t tx[] = {addr, data};
 
 	// Transmit data
-	HAL_StatusTypeDef ok = HAL_SPI_Transmit(spi, 2, 10);
+	HAL_StatusTypeDef ok = HAL_SPI_Transmit(spi, tx, 2, 10);
 	
 	// CS pin high
-	HAL_GPIO_WritePin(&gpio_port, gpio_pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_RESET);
 
 	return ok;
 }

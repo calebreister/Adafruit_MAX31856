@@ -70,8 +70,8 @@ typedef enum
 
 class Adafruit_MAX31856 {
 public:
-	Adafruit_MAX31856(SPI_HandleTypeDef* spi_port, GPIO_TypeDef* cs_port, uint32_t cs_pin);
-
+	Adafruit_MAX31856(SPI_HandleTypeDef* spi_port,
+	                  GPIO_TypeDef* cs_port, uint16_t cs_pin);
 	bool begin(void);
 
 	void setThermocoupleType(max31856_thermocoupletype_t type);
