@@ -17,6 +17,9 @@
 #ifndef ADAFRUIT_MAX31856_H
 #define ADAFRUIT_MAX31856_H
 
+#include "stm32f4xx_hal_spi.h"
+#include "stm32f4xx_hal_gpio.h"
+
 #define MAX31856_CR0_REG           0x00
 #define MAX31856_CR0_AUTOCONVERT   0x80
 #define MAX31856_CR0_1SHOT         0x40
@@ -65,42 +68,36 @@ typedef enum
   MAX31856_VMODE_G32 = 0b1100,
 } max31856_thermocoupletype_t;
 
-#if (ARDUINO >= 100)
- #include "Arduino.h"
-#else
- #include "WProgram.h"
-#endif
-
 class Adafruit_MAX31856 {
- public:
-  Adafruit_MAX31856(int8_t spi_cs, int8_t spi_mosi, int8_t spi_miso, int8_t spi_clk);
-  Adafruit_MAX31856(int8_t spi_cs);
+public:
+	Adafruit_MAX31856(SPI_HandleTypeDef* spi_port, GPIO_TypeDef* cs_port, uint32_t cs_pin);
 
-  boolean begin(void);
+	bool begin(void);
 
-  void setThermocoupleType(max31856_thermocoupletype_t type);
-  max31856_thermocoupletype_t getThermocoupleType(void);
+	void setThermocoupleType(max31856_thermocoupletype_t type);
+	max31856_thermocoupletype_t getThermocoupleType(void);
 
-  uint8_t readFault(void);
-  void oneShotTemperature(void);
+	uint8_t readFault(void);
+	void oneShotTemperature(void);
 
-  float readCJTemperature(void);
-  float readThermocoupleTemperature(void);
+	float readCJTemperature(void);
+	float readThermocoupleTemperature(void);
 
-  void setTempFaultThreshholds(float flow, float fhigh);
-  void setColdJunctionFaultThreshholds(int8_t low, int8_t high);
+	void setTempFaultThreshholds(float flow, float fhigh);
+	void setColdJunctionFaultThreshholds(int8_t low, int8_t high);
 
- private:
-  int8_t _sclk, _miso, _mosi, _cs;
-
-  void readRegisterN(uint8_t addr, uint8_t buffer[], uint8_t n);
-
-  uint8_t  readRegister8(uint8_t addr);
-  uint16_t readRegister16(uint8_t addr);
-  uint32_t readRegister24(uint8_t addr);
-
-  void     writeRegister8(uint8_t addr, uint8_t reg);
-  uint8_t spixfer(uint8_t addr);
+private:
+	SPI_HandleTypeDef* spi;
+	GPIO_TypeDef* gpio_port;
+	uint16_t gpio_pin;
+	
+	HAL_StatusTypeDef readRegisterN(uint8_t addr, uint8_t buffer[], uint8_t n);
+	
+	uint8_t  readRegister8(uint8_t addr);
+	uint16_t readRegister16(uint8_t addr);
+	uint32_t readRegister24(uint8_t addr);
+	
+	HAL_StatusTypeDef writeRegister8(uint8_t addr, uint8_t reg);
 };
 
 #endif
