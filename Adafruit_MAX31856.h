@@ -17,8 +17,7 @@
 #ifndef ADAFRUIT_MAX31856_H
 #define ADAFRUIT_MAX31856_H
 
-#include "stm32f4xx_hal_spi.h"
-#include "stm32f4xx_hal_gpio.h"
+#include "stm32f4xx_hal.h"
 
 #define MAX31856_CR0_REG           0x00
 #define MAX31856_CR0_AUTOCONVERT   0x80
