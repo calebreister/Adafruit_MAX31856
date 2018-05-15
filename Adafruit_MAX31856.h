@@ -53,7 +53,7 @@
 #define MAX31856_FAULT_OVUV        0x02
 #define MAX31856_FAULT_OPEN        0x01
 
-typedef enum
+enum max31856_thermocoupletype_t
 {
   MAX31856_TCTYPE_B  = 0b0000,
   MAX31856_TCTYPE_E  = 0b0001,
@@ -65,7 +65,7 @@ typedef enum
   MAX31856_TCTYPE_T  = 0b0111,
   MAX31856_VMODE_G8  = 0b1000,
   MAX31856_VMODE_G32 = 0b1100,
-} max31856_thermocoupletype_t;
+};
 
 class Adafruit_MAX31856 {
 public:

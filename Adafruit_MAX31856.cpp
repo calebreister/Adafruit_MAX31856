@@ -19,7 +19,7 @@
 
 // Hardware SPI init
 Adafruit_MAX31856::Adafruit_MAX31856(SPI_HandleTypeDef* spi_port,
-									 GPIO_TypeDef* cs_port, uint16_t cs_pin)
+                                     GPIO_TypeDef* cs_port, uint16_t cs_pin)
 {
 	spi = spi_port;
 	gpio_port = cs_port;
@@ -166,7 +166,7 @@ HAL_StatusTypeDef Adafruit_MAX31856::readRegisterN(uint8_t addr, uint8_t buffer[
 		return ok;
 	
 	// CS pin high
-	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_SET);
 	return HAL_OK;
 }
 
@@ -184,7 +184,7 @@ HAL_StatusTypeDef Adafruit_MAX31856::writeRegister8(uint8_t addr, uint8_t data) 
 	HAL_StatusTypeDef ok = HAL_SPI_Transmit(spi, tx, 2, 10);
 	
 	// CS pin high
-	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(gpio_port, gpio_pin, GPIO_PIN_SET);
 
 	return ok;
 }
