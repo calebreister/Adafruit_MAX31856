@@ -1,4 +1,5 @@
-This is the Adafruit MAX31856 Arduino Library 
+This is a modified version of the Adafruit MAX31856 Arduino Library designed
+for use with the STM32 HAL libraries.
 
 Tested and works great with the Adafruit Thermocouple Breakout w/MAX31856
     
@@ -11,6 +12,6 @@ Adafruit invests time and resources providing this open source code,
 please support Adafruit and open-source hardware by purchasing 
 products from Adafruit!
 
-Written by Limor Fried/Ladyada  for Adafruit Industries.  
+Written by Limor Fried/Ladyada for Adafruit Industries.  
 BSD license, check license.txt for more information
 All text above must be included in any redistribution
